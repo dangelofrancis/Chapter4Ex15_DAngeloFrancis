@@ -27,17 +27,69 @@ using namespace std;
 
 int main()
 {
-	int weight = 0;
-	double distance = 0;
+	// defining variables
+	int weight;
+	int distance;
+	double ratePer500Miles = 0;
+	double distanceIntervals;
+	double shippingCost;
 
-	cout << "Enter the weight of the package in kilograms: " << endl;
+	// user inputs weight
+	cout << "Enter the weight of the package in kilograms: ";
 	cin >> weight; 
 	cout << endl;
 
-	switch (weight)
+	// calculating shipping rate based on weight
+	if (weight > 20)
 	{
-	case 1:
-
+		cout << "We do not accept packages that have a weight greater than 20 kg.";
+		return 0;
 	}
+	else if (weight <= 0)
+	{
+		cout << "The weight you entered is invalid.";
+		return 0;
+	}
+	else if (weight <= 2 && weight > 0)
+	{
+		ratePer500Miles = 1.10;
+	}
+	else if (weight > 2 && weight <= 6)
+	{
+		ratePer500Miles = 2.20;
+	}
+	else if (weight > 6 && weight <= 10)
+	{
+		ratePer500Miles = 3.70;
+	}
+	else if (weight > 10 && weight <= 20)
+	{
+		ratePer500Miles = 4.80;
+	}
+
+	// user inputs distance
+	cout << "Enter the distance in miles the package must be shipped: ";
+	cin >> distance;
+	cout << endl;
+
+	// distance must be greater than 10 and less than 3000
+	if (distance < 10)
+	{
+		cout << "The distance entered does not meet the company's mininum shipping distance of 10 miles.";
+		return 0;
+	}
+	else if (distance > 3000)
+	{
+		cout << "The distance entered exceeds the company's maximun shipping distance of 3,000 miles.";
+		return 0;
+	}
+
+	// calculating the increments of every 500 miles
+	distanceIntervals = round(static_cast<double>(distance) / 500);
+	shippingCost = ratePer500Miles * distanceIntervals; // total cost
+
+	cout << fixed << setprecision(2);
+	cout << "The total cost to ship a " << weight << " kg package " << distance << " miles will be: $" << shippingCost;
+	
 	return 0;
 }
